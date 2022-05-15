@@ -18,13 +18,6 @@ Dormitory::Dormitory(string street, int buildingNo, Faculty faculty, vector<Room
 	this->faculty = faculty;
 	this->rooms = rooms;
 }
-Dormitory::Dormitory(const Dormitory& obj)
-{
-	this->street = obj.street;
-	this->buildingNo = obj.buildingNo;
-	this->faculty = obj.faculty;
-	this->rooms = obj.rooms;
-}
 Dormitory::~Dormitory()
 {
 }

@@ -18,7 +18,6 @@ private:
 public:
 	Dormitory();
 	Dormitory(string street, int buildingNo, Faculty faculty, vector<Room> rooms);
-	Dormitory(const Dormitory& obj);
 	~Dormitory();
 	//setterrs
 	void setFaculty(Faculty faculty);
