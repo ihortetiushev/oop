@@ -1,0 +1,69 @@
+Street: Nauky avenu, No: 151. Institution: Kharkiv National University of Radioelectronics
+Total amount of rooms in dormitory: 4
+Average dormitory load: 54.5455%
+Room No: 1
+Capacity: 3
+Occupied: 2
+ Room No: 2
+Capacity: 3
+Occupied: 3
+ Room No: 3
+Capacity: 2
+Occupied: 1
+ Room No: 4
+Capacity: 3
+Occupied: 0
+ 
+Street: Nauky avenu, No: 100. Institution: Some Usual University
+Total amount of rooms in dormitory: 8
+Average dormitory load: 23.8095%
+Room No: 121
+Capacity: 3
+Occupied: 2
+ Room No: 122
+Capacity: 3
+Occupied: 2
+ Room No: 123
+Capacity: 2
+Occupied: 1
+ Room No: 124
+Capacity: 3
+Occupied: 0
+ Room No: 125
+Capacity: 3
+Occupied: 0
+ Room No: 126
+Capacity: 2
+Occupied: 0
+ Room No: 127
+Capacity: 3
+Occupied: 0
+ Room No: 127
+Capacity: 2
+Occupied: 0
+ 
+Street: Heroyv Kharkiva street, No: 125. Institution: Another one University
+Total amount of rooms in dormitory: 7
+Average dormitory load: 21.0526%
+Room No: 221
+Capacity: 3
+Occupied: 3
+ Room No: 222
+Capacity: 3
+Occupied: 1
+ Room No: 223
+Capacity: 2
+Occupied: 0
+ Room No: 224
+Capacity: 3
+Occupied: 0
+ Room No: 225
+Capacity: 3
+Occupied: 0
+ Room No: 226
+Capacity: 2
+Occupied: 0
+ Room No: 227
+Capacity: 3
+Occupied: 0
+ 

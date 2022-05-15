@@ -24,6 +24,6 @@ public:
 	bool removeOccupant(int cnt);
 	bool operator == (Room& room) const;
 };
-//istream& operator >>(istream& in, Room& room);
-ostream& operator <<(ostream& in, Room& room);
+istream& operator >>(istream& in, Room& room);
+ostream& operator <<(ostream& in, const Room& room);
 

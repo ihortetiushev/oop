@@ -1,0 +1,1 @@
+Kharkiv National University of Radioelectronics$Faculty of Computer Science$200$Nauky avenu$151$1:3:2:2:3:3:3:2:1:4:3:0$Some Usual University$Faculty name$150$Nauky avenu$100$121:3:2:122:3:2:123:2:1:124:3:0:125:3:0:126:2:0:127:3:0:127:2:0$Another one University$Some other faculty name$130$Heroyv Kharkiva street$125$221:3:3:222:3:1:223:2:0:224:3:0:225:3:0:226:2:0:227:3:0$

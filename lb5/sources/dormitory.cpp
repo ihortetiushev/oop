@@ -4,14 +4,14 @@
 #include "dormitory.h"
 #include "room.h"
 #include "utils.h"
-
+#include <sstream>
 
 using namespace std;
 
 Dormitory::Dormitory()
 {
 }
-Dormitory::Dormitory(string street, string buildingNo, Faculty faculty, vector<Room> rooms)
+Dormitory::Dormitory(string street, int buildingNo, Faculty faculty, vector<Room> rooms)
 {
 	this->street = street;
 	this->buildingNo = buildingNo;
@@ -31,14 +31,13 @@ Dormitory::~Dormitory()
 string Dormitory::getFullAddressWithInstitutionName() const
 {
 	bool noDataDefined = this->street.length() == 0
-		&& this->buildingNo.length() == 0
 		&& this->faculty.getInstitute().length() == 0;
 	if (noDataDefined)
 	{
 		throw "Must define street , buildingNo and faculty.institute first";
 	}
 
-	string ret = "Street: " + this->street + ", No: " + this->buildingNo + ". Institution: " + this->faculty.getInstitute();
+	string ret = "Street: " + this->street + ", No: " + to_string(this->buildingNo) + ". Institution: " + this->faculty.getInstitute();
 	return ret;
 }
 double Dormitory::getAverageOccupancy() const 
@@ -57,21 +56,11 @@ double Dormitory::getAverageOccupancy() const
 	return (double (totalOccupied) / (double)totalCapacity) * 100;
 
 }
-Dormitory::operator double() const
+bool Dormitory::operator <(const Dormitory& arg2) const 
 {
-	return this->getAverageOccupancy();
-}
-Dormitory& Dormitory::operator =(const Dormitory& obj)
-{
-	if (this == &obj) {
-		return (*this);
-	}
-	this->~Dormitory();
-	this->street = obj.street;
-	this->buildingNo = obj.buildingNo;
-	this->faculty = obj.faculty;
-	this->rooms = obj.rooms;
-	return *this;
+	string addr1 = this->street + to_string(this->buildingNo);
+	string addr2 = arg2.street + to_string(arg2.buildingNo);
+	return (addr1 < addr2);
 }
 void Dormitory::setFaculty(Faculty faculty)
 {
@@ -81,7 +70,7 @@ void Dormitory::setStreet(string street)
 {
 	this->street = street;
 }
-void Dormitory::setBuildingNo(string buildingNo) 
+void Dormitory::setBuildingNo(int buildingNo) 
 {
 	this->buildingNo = buildingNo;
 }
@@ -89,7 +78,7 @@ void Dormitory::setRooms(vector<Room> rooms)
 {
 	this->rooms = rooms;
 }
-vector<Room>& Dormitory::getRooms()  
+vector<Room> Dormitory::getRooms() const 
 {
 	return rooms;
 }
@@ -158,25 +147,34 @@ void enterRooms(istream& in, Dormitory& dormitory, int roomsToEnter)
 }
 istream& operator >>(istream& in, Dormitory& dormitory)
 {
-	string instName, facultyName, streetName, buildNo;
-	instName = getStrFromConsole("Please input institute name: ");
-	facultyName = getStrFromConsole("Please input faculty name: ");
-	int cnt = getNumberFromConsole("Please input students count (100...1000): ", 100, 10000);
-	Faculty faculty = Faculty(instName, facultyName, cnt);
+	//institue name$faculty name$students count$dormitory street name$dormitory building no$room no:room capacity:occupied
+	string tmpStr1, tmpStr2, tmpStr3;
+	getline(in, tmpStr1, '$');
+	getline(in, tmpStr2, '$');
+	getline(in, tmpStr3, '$');
+	Faculty faculty = Faculty(tmpStr1, tmpStr2, atoi(tmpStr3.c_str()));
 	dormitory.setFaculty(faculty);
-	streetName = getStrFromConsole("Please input dormitory street name: ");
-	buildNo = getStrFromConsole("Please input dormitory building No: ");
-	dormitory.setStreet(streetName);
-	dormitory.setBuildingNo(buildNo);
-	cnt = getNumberFromConsole("Please input number of rooms to enter manually (1...6): ", 1, 6);
-	enterRooms(in, dormitory, cnt);
+	getline(in, tmpStr1, '$');
+	dormitory.setStreet(tmpStr1);
+	getline(in, tmpStr1, '$');
+	if (!tmpStr1.empty()) 
+	{
+		dormitory.setBuildingNo(stoi(tmpStr1.c_str()));
+	}
+	//rooms
+	getline(in, tmpStr1, '$');
+	stringstream streamRooms(tmpStr1);
+	vector<Room> rooms;
+	copy(istream_iterator<Room>(streamRooms), istream_iterator<Room>(), back_inserter(rooms));
+	dormitory.setRooms(rooms);
 	return in;
 }
-ostream& operator <<(ostream& out, Dormitory& dormitory)
+ostream& operator <<(ostream& out, const Dormitory& dormitory)
 {
 	out << dormitory.getFullAddressWithInstitutionName() << endl;
 	out << "Total amount of rooms in dormitory: " << to_string(dormitory.getRooms().size()) << endl;
-	out << "Average dormitory load: " << (double)dormitory << "%" << endl;
+	out << "Average dormitory load: " << dormitory.getAverageOccupancy() << "%" << endl;
+	dormitory.outputRooms(out);
 	return out;
 }
 bool Dormitory::operator +(const Room roomToAdd) 
@@ -252,44 +250,7 @@ Room* Dormitory::chooseRoom(string msg)
 	} while (chosenRoom == nullptr);
 	return chosenRoom;
 }
-void Dormitory::addStudents()
-{
-	Room* choosen = chooseRoom("Choose room No to add students to : ");
-	Room roomSelected = *choosen;
-	clearScreen();
-	cout << roomSelected;
-	int max = roomSelected.getCapacity() - roomSelected.getOccupied();
-	if (max == 0)
-	{
-		cout << "This room has no space left" << endl;
-	}
-	else
-	{
-		int no = getNumberFromConsole("How many students to add (1..." + to_string(max) + "): ", 1, max);
-		Room& roomToUpdate = getByRoomNo(roomSelected.getRoomNo());
-		roomToUpdate.addOccupant(no);
-	}
-	system("pause");
-}
-void Dormitory::removeStudents()
-{
-	Room* choosen = chooseRoom("Choose room No to remove students from : ");
-	Room roomSelected = *choosen;
-	clearScreen();
-	cout << roomSelected;
-	int max = roomSelected.getOccupied();
-	if (max == 0)
-	{
-		cout << "This room is empty already" << endl;
-	}
-	else
-	{
-		int no = getNumberFromConsole("How many students to remove (1..." + to_string(max) + "): ", 1, max);
-		Room& roomToUpdate = getByRoomNo(roomSelected.getRoomNo());
-		roomToUpdate.removeOccupant(no);
-	}
-	system("pause");
-}
+
 void Dormitory::printAvailableRooms()
 {
 	vector<Room> rooms = getRooms();
@@ -324,4 +285,12 @@ void Dormitory::printInstituteStatistics()
 	}
 	cout << "Living in dormitory: " << (double(totalStudentsInDormitory) / (double)totalStudentsInUnstitute) * 100 << "% of all strudents"  << endl;
 	system("pause");
+}
+void Dormitory::outputRooms(ostream& out) const
+{
+	copy(rooms.begin(), rooms.end(), ostream_iterator<Room>(out, " "));
+}
+int Dormitory::getBuildingNo() const 
+{
+	return this->buildingNo;
 }

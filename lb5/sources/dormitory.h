@@ -11,22 +11,23 @@ class Dormitory
 {
 private:
 	string street;
-	string buildingNo;
+	int buildingNo;
 	Faculty faculty;
 	vector<Room> rooms;
 
 public:
 	Dormitory();
-	Dormitory(string street, string buildingNo, Faculty faculty, vector<Room> rooms);
+	Dormitory(string street, int buildingNo, Faculty faculty, vector<Room> rooms);
 	Dormitory(const Dormitory& obj);
 	~Dormitory();
 	//setterrs
 	void setFaculty(Faculty faculty);
 	void setStreet(string street);
-	void setBuildingNo(string buildingNo);
+	void setBuildingNo(int buildingNo);
 	void setRooms(vector<Room> rooms);
 
-	vector<Room>& getRooms();
+	vector<Room> getRooms() const;
+	int getBuildingNo() const;
 
 	//public business logic methods
 	string getFullAddressWithInstitutionName() const;
@@ -37,16 +38,14 @@ public:
 	Room* getByRoomNo(Room room);
 	Room& getByRoomNo(int roomNo);
 	Room* chooseRoom(string msg);
-	void addStudents();
-	void removeStudents();
 	void printAvailableRooms();
 	void printInstituteStatistics();
+	void outputRooms(ostream& out) const;
 
 	//operators
-	operator double() const;//used to get average occupancy
-	Dormitory& operator =(const Dormitory& obj);
+	bool operator <(const Dormitory& arg2) const;
 	bool operator +(const Room roomToAdd);//adding a room
 };
 
 istream& operator >>(istream& in, Dormitory& dormitory);
-ostream& operator <<(ostream& out, Dormitory& dormitory);
+ostream& operator <<(ostream& out, const Dormitory& dormitory);

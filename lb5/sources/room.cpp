@@ -58,8 +58,18 @@ void Room::setRoomNo(int roomNo)
 {
 	this->roomNo = roomNo;
 }
-
-ostream& operator <<(ostream& out, Room& room)
+istream& operator >>(istream& in, Room& room) 
+{
+	string tmpStr;
+	getline(in, tmpStr, ':');
+	room.setRoomNo(atoi(tmpStr.c_str()));
+	getline(in, tmpStr, ':');
+	room.setCapacity(atoi(tmpStr.c_str()));
+	getline(in, tmpStr, ':');
+	room.setOccupied(atoi(tmpStr.c_str()));
+	return in;
+}
+ostream& operator <<(ostream& out, const Room& room)
 {
 	out << "Room No: " << to_string(room.getRoomNo()) << endl;
 	out << "Capacity: " << to_string(room.getCapacity()) << endl;
