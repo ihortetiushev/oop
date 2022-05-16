@@ -47,10 +47,11 @@ bool compareDormitory(const Dormitory& a, const Dormitory& b)
 }
 int main()
 {
-	ifstream fin("dormitories.txt");
+	string filename = "dormitories.txt";
+	ifstream fin(filename);
 	if (!fin)
 	{
-		cerr << "File not found" << endl;
+		cerr << "File "+ filename +" not found" << endl;
 		system("pause");
 		return 0;
 	}
