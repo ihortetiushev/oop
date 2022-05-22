@@ -154,6 +154,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="lb6.cpp" />
+    <ClCompile Include="utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="lb6.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="inputData.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
