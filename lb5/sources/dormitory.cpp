@@ -96,16 +96,7 @@ Room* Dormitory::getByRoomNo(Room room)
 	}
 	return nullptr;
 }
-Room& Dormitory::getByRoomNo(int roomNo)
-{
-	for (unsigned int i = 0; i < rooms.size(); i++)
-	{
-		if (rooms.at(i).getRoomNo() == roomNo)
-		{
-			return rooms.at(i);
-		}
-	}
-}
+
 bool Dormitory::addRoom(Room roomToAdd) 
 {
 	Room *room = getByRoomNo(roomToAdd);
@@ -174,35 +165,7 @@ bool Dormitory::operator +(const Room roomToAdd)
 {
 	return addRoom(roomToAdd);
 }
-Room enterRoomFromConsole()
-{
-	int no = getNumberFromConsole("Please input room No (1...1000): ", 1, 1000);
-	int capacity = getNumberFromConsole("Please input room capacity (1...5): ", 1, 5);
-	string msg = "Please input how many students are already living in the room (0..." + to_string(capacity) + "): ";
-	int occupied = getNumberFromConsole(msg, 0, capacity);
-	Room room = Room(no, capacity, occupied);
-	return room;
-}
-void Dormitory::enterRoom()
-{
-	bool roomAdded = false;
-	do
-	{
-		clearScreen();
-		Room roomToAdd = enterRoomFromConsole();
-		bool isRoomAdded = this->addRoom(roomToAdd);
-		if (!isRoomAdded)
-		{
-			cout << "Room with this number already exists in this dormitory. Try again." << endl;
-			system("pause");
-		}
-		else
-		{
-			roomAdded = true;
-		}
 
-	} while (!roomAdded);
-}
 vector<int> Dormitory::listRoomNumbers() const
 {
 	vector<int> nums;
@@ -211,37 +174,6 @@ vector<int> Dormitory::listRoomNumbers() const
 		nums.push_back(rooms.at(i).getRoomNo());
 	}
 	return nums;
-}
-Room* Dormitory::chooseRoom(string msg)
-{
-	Room* chosenRoom;
-	do
-	{
-		clearScreen();
-		vector<int> nums = listRoomNumbers();
-		string numsStr;
-		for (unsigned int i = 0; i < nums.size(); i++)
-		{
-			if (i != 0)
-			{
-				numsStr = numsStr + " ";
-			}
-			numsStr = numsStr + to_string(nums.at(i));
-		}
-		cout << "Avaiable rooms: " + numsStr << endl;
-		cout << msg;
-		int num;
-		cin >> num;
-		Room toFind;
-		toFind.setRoomNo(num);
-		chosenRoom = getByRoomNo(toFind);
-		if (chosenRoom == nullptr)
-		{
-			cout << "No room with chosen number is avaibable" << endl;
-			system("pause");
-		}
-	} while (chosenRoom == nullptr);
-	return chosenRoom;
 }
 
 void Dormitory::printAvailableRooms()

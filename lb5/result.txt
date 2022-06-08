@@ -66,4 +66,3 @@ Occupied: 0
  Room No: 227
 Capacity: 3
 Occupied: 0
- 

@@ -32,11 +32,8 @@ public:
 	string getFullAddressWithInstitutionName() const;
 	bool addRoom(Room roomToAdd);
 	double getAverageOccupancy() const;
-	void enterRoom();
 	vector<int> listRoomNumbers() const;
 	Room* getByRoomNo(Room room);
-	Room& getByRoomNo(int roomNo);
-	Room* chooseRoom(string msg);
 	void printAvailableRooms();
 	void printInstituteStatistics();
 	void outputRooms(ostream& out) const;
