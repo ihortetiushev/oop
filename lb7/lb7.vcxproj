@@ -129,6 +129,9 @@
   <ItemGroup>
     <ClCompile Include="lb7.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\lb5\readme.md" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
